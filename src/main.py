@@ -2,6 +2,13 @@ import sys
 import logging
 import argparse
 import signal
+
+# Use the OS certificate store (e.g., Windows cert store) for SSL verification.
+# This allows requests to trust custom/internal CA certificates without manual configuration.
+try:
+    import pip_system_certs  # noqa: F401
+except ImportError:
+    pass
 from pathlib import Path
 from src.telemetry.consent import consent_config_exist
 from src.logging.global_logging import setup_logging

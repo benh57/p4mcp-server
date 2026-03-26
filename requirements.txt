@@ -39,6 +39,7 @@ opentelemetry-sdk==1.39.1
 opentelemetry-semantic-conventions==0.60b1
 p4python==2025.2.2863679
 packaging==26.0
+pip_system_certs==4.0
 pathable==0.4.4
 platformdirs==4.5.1
 prometheus_client==0.24.1
