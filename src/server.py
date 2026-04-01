@@ -599,8 +599,12 @@ class P4MCPServer:
             )] = None,
             context: Annotated[Optional[dict], Field(
                 default=None,
-                description="Comment context: file, leftLine, rightLine, content, version, attribute, comment",
-                examples=[{"file": "//depot/path/file.txt", "rightLine": 42, "leftLine": 40}]
+                description="Comment context for inline comments. "
+                    "For inline file comments, you MUST provide all three of: leftLine, rightLine, and content together. "
+                    "content can be an empty list []. "
+                    "file must be a depot path starting with //. "
+                    "Fields: file, leftLine, rightLine, content, version, attribute, comment",
+                examples=[{"file": "//depot/path/file.txt", "leftLine": 40, "rightLine": 42, "content": []}]
             )] = None,
             vote_value: Annotated[Optional[Literal["up", "down", "clear"]], Field(
                 default=None,

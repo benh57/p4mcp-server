@@ -185,10 +185,19 @@ class CommentContext(BaseParams):
 
     @model_validator(mode="after")
     def validate_context_semantics(self):
-        """Validate context semantics."""
-        if (self.leftLine is not None or self.rightLine is not None or self.content is not None):
-            if self.leftLine is None or self.rightLine is None or self.content is None:
-                raise ValueError("leftLine, rightLine, and content must all be specified together")
+        """Validate context semantics.
+
+        leftLine and rightLine must be specified together. content is auto-filled
+        as an empty list when lines are provided, since the service layer always
+        sends content as [] to the Swarm API regardless of what the caller provides.
+        """
+        has_left = self.leftLine is not None
+        has_right = self.rightLine is not None
+        if has_left != has_right:
+            raise ValueError("leftLine and rightLine must be specified together")
+        # Auto-fill content when line numbers are provided
+        if has_left and has_right and self.content is None:
+            self.content = []
         return self
 
 class ModifyReviewsParams(BaseParams):
